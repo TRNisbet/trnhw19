@@ -8,9 +8,10 @@ export default class Discover extends Component {
 
     this.state = {
         Employees: [],
-        sorted: false,
+        filteredEmp: [],
     };
        this.handleOnClick = this.handleOnClick.bind(this);
+       this.onClickRad = this.onClickRad.bind(this);
     }
 
     componentDidMount() {
@@ -23,7 +24,8 @@ export default class Discover extends Component {
         API.getEmployees()
             .then(res =>
                 this.setState({
-                   Employees: res.data.results
+                   Employees: res.data.results,
+                   filteredEmp:  res.data.results,
                 })
             )
             .catch(err => console.log(err));
@@ -40,24 +42,49 @@ export default class Discover extends Component {
             if (emp1>emp2) {
                 return 1;
             }
-            // a must be equal to b
+            
             return 0;
         }
 
-var sortedEmp = this.state.Employees.sort(compare);
+            var sortedEmp = this.state.Employees.sort(compare);
 
             this.setState({
-                   Employees: sortedEmp
+                   filterEmps: sortedEmp
                 })
-           
-
     }
 
+onClickRad = (e) => {
+    const gender = e.currentTarget.value;
+    
+    if (gender === "all") {
+        this.setState({
+      filteredEmp: this.state.Employees
+      });
+       return;
+    }
+
+    var filterEmps = this.state.Employees.filter( function(employee) { 
+    return employee.gender == gender;
+
+    });
+    
+    this.setState({
+      filteredEmp: filterEmps
+      });
+    
+    }
     render() {
         return (
             <div>
+                <h1>Employee Dirctory</h1>
+                   <input type="radio" id="male" name="gender" value="male" onClick={this.onClickRad}/>
+                   <label for="male">Male</label>
+                   <input type="radio" id="female" name="gender" value="female" onClick={this.onClickRad}/>
+                   <label for="female">Female</label>
+                   <input type="radio" id="all" name="gender" value="all" onClick={this.onClickRad}/>
+                   <label for="other">All</label>
                 <table>
-                   <caption className="text-center">Employee Directory</caption>
+                   
                    <thead>
                        <tr> 
                             <th onClick={this.handleOnClick}>First Name</th>
@@ -68,7 +95,7 @@ var sortedEmp = this.state.Employees.sort(compare);
                         </tr>
                    </thead>
                        <tbody>
-                    {this.state.Employees.map((Employee) => {
+                    {this.state.filteredEmp.map((Employee) => {
                         return (<tr key={Employee.login.uuid}>
                             <td>{Employee.name.first} </td>
                             <td>{Employee.name.last} </td>

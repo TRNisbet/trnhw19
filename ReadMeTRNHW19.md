@@ -1,5 +1,13 @@
 # Unit 19 React Homework: Employee Directory
 
+The react app pulls an employee list of 25 employees from https://randomuser.me.  The list can be sorted by first name of the employees using an onclick function tied to the the "First Name" Table Head.  The group of employees can be sorted by gender using an onclick function tied to the selected gender at the top of the table.  The database only uses options of "male", "female" or "other" but no instances of other were observed in the sampled data.  Since no option of other appeared it was not utilized but an "All" was added to get back to the complete list.  The sort function does work while a specific gender is selected, however the user must click on another gender and back to the desired one to have the results display.  
+
+
+
+
+
+Below are the assignment details given with the homework.
+
 ## Overview
 
 For this assignment, you'll create a employee directory with React. This assignment will require you to break up your application's UI into components, manage component state, and respond to user events.
